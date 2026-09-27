@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VIVIROT — Community Ranking</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+  <div class="logo">
+    VIVI<span>ROT</span>
+  </div>
+
+  <nav>
+    <a href="user.html" class="active">Leaderboard</a>
+    <a href="#profile">Profil Saya</a>
+    <a href="admin.html">Admin</a>
+
+    <button onclick="toggleDarkMode()" class="theme-btn">
+      ◐
+    </button>
+  </nav>
+
+</header>
+
+
+<main class="container">
+
+  <!-- HEADER -->
+
+  <section class="page-header">
+
+    <div>
+      <small>VIVIROT.UT.ID</small>
+
+      <h1>
+        Community Leaderboard
+      </h1>
+
+      <p>
+        Temukan, dukung, dan kenali profil komunitas terbaik.
+      </p>
+    </div>
+
+    <button
+      class="primary-btn"
+      onclick="openVoteModal()"
+    >
+      ⚡ Super Vote
+      <span id="voteCount">3</span>
+    </button>
+
+  </section>
+
+
+  <!-- RANKING TABS -->
+
+  <div class="tabs">
+
+    <button
+      class="tab active"
+      onclick="changeRanking('official', this)"
+    >
+      🏆 Peringkat Resmi
+    </button>
+
+    <button
+      class="tab"
+      onclick="changeRanking('popular', this)"
+    >
+      ❤️ Peringkat Komunitas
+    </button>
+
+  </div>
+
+
+  <!-- FILTER -->
+
+  <section class="filters">
+
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="🔎 Cari nama..."
+      oninput="renderProfiles()"
+    >
+
+    <select
+      id="categoryFilter"
+      onchange="renderProfiles()"
+    >
+
+      <option value="">
+        Semua kategori
+      </option>
+
+      <option value="Prestasi">
+        Prestasi
+      </option>
+
+      <option value="Keahlian">
+        Keahlian
+      </option>
+
+      <option value="Wilayah">
+        Wilayah
+      </option>
+
+    </select>
+
+
+    <select
+      id="sortFilter"
+      onchange="renderProfiles()"
+    >
+
+      <option value="rank">
+        Peringkat Tertinggi
+      </option>
+
+      <option value="likes">
+        Paling Disukai
+      </option>
+
+      <option value="new">
+        Profil Terbaru
+      </option>
+
+    </select>
+
+  </section>
+
+
+  <!-- PROFILE LIST -->
+
+  <section
+    id="profileContainer"
+    class="profile-grid"
+  >
+  </section>
+
+
+  <!-- MY PROFILE -->
+
+  <section
+    id="profile"
+    class="my-profile"
+  >
+
+    <h2>
+      Profil Saya
+    </h2>
+
+    <label>
+      Nama
+
+      <input
+        id="myName"
+        value="Demo User"
+      >
+
+    </label>
+
+
+    <label>
+      Bio
+
+      <textarea
+        id="myBio"
+      >Pengguna VIVIROT.</textarea>
+
+    </label>
+
+
+    <button
+      class="primary-btn"
+      onclick="saveMyProfile()"
+    >
+      Simpan Profil
+    </button>
+
+  </section>
+
+</main>
+
+
+<!-- MODAL -->
+
+<div
+  id="modal"
+  class="modal"
+>
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+>
+</div>
+
+
+<script src="user.js"></script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    VIVIROT — Admin Control Panel
+  </title>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+  <div class="logo">
+
+    VIVI<span>ROT</span>
+
+    <small>
+      ADMIN
+    </small>
+
+  </div>
+
+
+  <nav>
+
+    <a href="user.html">
+      User Preview
+    </a>
+
+    <button
+      onclick="toggleDarkMode()"
+      class="theme-btn"
+    >
+      ◐
+    </button>
+
+  </nav>
+
+</header>
+
+
+
+<div class="admin-layout">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+  <h3>
+    CONTROL PANEL
+  </h3>
+
+
+  <button
+    onclick="showAdminPage('dashboard', this)"
+    class="side-btn active"
+  >
+    📊 Dashboard
+  </button>
+
+
+  <button
+    onclick="showAdminPage('profiles', this)"
+    class="side-btn"
+  >
+    👤 Manajemen Profil
+  </button>
+
+
+  <button
+    onclick="showAdminPage('ranking', this)"
+    class="side-btn"
+  >
+    ↕️ Ranking Manual
+  </button>
+
+
+  <button
+    onclick="showAdminPage('users', this)"
+    class="side-btn"
+  >
+    👥 Pengguna
+  </button>
+
+
+  <button
+    onclick="showAdminPage('comments', this)"
+    class="side-btn"
+  >
+    💬 Moderasi Komentar
+  </button>
+
+
+  <button
+    onclick="showAdminPage('reports', this)"
+    class="side-btn"
+  >
+    🚩 Laporan
+  </button>
+
+
+  <button
+    onclick="showAdminPage('settings', this)"
+    class="side-btn"
+  >
+    ⚙️ Pengaturan
+  </button>
+
+</aside>
+
+
+
+<!-- ADMIN CONTENT -->
+
+<main class="admin-content">
+
+
+<!-- DASHBOARD -->
+
+<section
+  id="dashboard"
+  class="admin-page active"
+>
+
+  <h1>
+    Dashboard
+  </h1>
+
+  <p>
+    Ringkasan aktivitas VIVIROT.
+  </p>
+
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <span>Total Profil</span>
+      <strong>24</strong>
+    </div>
+
+
+    <div class="stat-card">
+      <span>Pengguna Aktif</span>
+      <strong>1.284</strong>
+    </div>
+
+
+    <div class="stat-card">
+      <span>Vote Hari Ini</span>
+      <strong>846</strong>
+    </div>
+
+
+    <div class="stat-card">
+      <span>Laporan</span>
+      <strong>7</strong>
+    </div>
+
+  </div>
+
+
+  <div class="admin-box">
+
+    <h2>
+      Aktivitas Platform
+    </h2>
+
+    <div class="bar">
+      Senin
+      <span style="width:65%"></span>
+    </div>
+
+    <div class="bar">
+      Selasa
+      <span style="width:82%"></span>
+    </div>
+
+    <div class="bar">
+      Rabu
+      <span style="width:52%"></span>
+    </div>
+
+    <div class="bar">
+      Kamis
+      <span style="width:91%"></span>
+    </div>
+
+    <div class="bar">
+      Jumat
+      <span style="width:76%"></span>
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- PROFILE MANAGEMENT -->
+
+<section
+  id="profiles"
+  class="admin-page"
+>
+
+  <div class="admin-title">
+
+    <div>
+
+      <h1>
+        Manajemen Profil
+      </h1>
+
+      <p>
+        Tambah, edit, dan hapus profil.
+      </p>
+
+    </div>
+
+
+    <button
+      class="primary-btn"
+      onclick="addProfile()"
+    >
+      + Tambah Profil
+    </button>
+
+  </div>
+
+
+  <div class="admin-box">
+
+    <input
+      id="adminSearch"
+      placeholder="Cari profil..."
+      oninput="renderAdminProfiles()"
+    >
+
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Profil
+          </th>
+
+          <th>
+            Kategori
+          </th>
+
+          <th>
+            Like
+          </th>
+
+          <th>
+            Status
+          </th>
+
+          <th>
+            Aksi
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody
+        id="adminProfileList"
+      >
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+
+<!-- MANUAL RANKING -->
+
+<section
+  id="ranking"
+  class="admin-page"
+>
+
+  <h1>
+    Ranking Manual
+  </h1>
+
+  <p>
+    Admin dapat menentukan urutan ranking resmi.
+  </p>
+
+
+  <div class="admin-box">
+
+    <button
+      class="primary-btn"
+      onclick="publishRanking()"
+    >
+      Publikasikan Ranking
+    </button>
+
+
+    <div
+      id="rankingList"
+      class="ranking-admin-list"
+    >
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- USER MANAGEMENT -->
+
+<section
+  id="users"
+  class="admin-page"
+>
+
+  <h1>
+    Manajemen Pengguna
+  </h1>
+
+  <div class="admin-box">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Username
+          </th>
+
+          <th>
+            Role
+          </th>
+
+          <th>
+            Status
+          </th>
+
+          <th>
+            Aksi
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr>
+
+          <td>
+            demo_user
+          </td>
+
+          <td>
+            User
+          </td>
+
+          <td>
+            <span class="status">
+              Aktif
+            </span>
+          </td>
+
+          <td>
+
+            <button
+              onclick="banUser('demo_user')"
+              class="danger-btn"
+            >
+              Ban
+            </button>
+
+          </td>
+
+        </tr>
+
+
+        <tr>
+
+          <td>
+            admin_vivirot
+          </td>
+
+          <td>
+            Admin
+          </td>
+
+          <td>
+            <span class="status">
+              Aktif
+            </span>
+          </td>
+
+          <td>
+            Protected
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+
+<!-- COMMENT MODERATION -->
+
+<section
+  id="comments"
+  class="admin-page"
+>
+
+  <h1>
+    Moderasi Komentar
+  </h1>
+
+  <p>
+    Kelola komentar yang dilaporkan atau terdeteksi spam.
+  </p>
+
+
+  <div
+    id="commentList"
+    class="admin-box"
+  >
+  </div>
+
+</section>
+
+
+
+<!-- REPORTS -->
+
+<section
+  id="reports"
+  class="admin-page"
+>
+
+  <h1>
+    Laporan & Keamanan
+  </h1>
+
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <span>Spam</span>
+      <strong>3</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>Komentar</span>
+      <strong>2</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>Akun</span>
+      <strong>1</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>Lainnya</span>
+      <strong>1</strong>
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- SETTINGS -->
+
+<section
+  id="settings"
+  class="admin-page"
+>
+
+  <h1>
+    Pengaturan Platform
+  </h1>
+
+
+  <div class="admin-box">
+
+    <label>
+
+      Super Vote / Hari
+
+      <input
+        type="number"
+        value="3"
+      >
+
+    </label>
+
+
+    <label>
+
+      Periode Ranking
+
+      <select>
+
+        <option>
+          Mingguan
+        </option>
+
+        <option selected>
+          Bulanan
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <label>
+
+      Moderasi
+
+      <select>
+
+        <option>
+          Auto + Manual
+        </option>
+
+        <option>
+          Manual
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <button
+      class="primary-btn"
+      onclick="showToast('Pengaturan berhasil disimpan')"
+    >
+      Simpan Pengaturan
+    </button>
+
+  </div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+
+<div
+  id="toast"
+  class="toast"
+>
+</div>
+
+
+<script src="admin.js"></script>
+
+</body>
+
+</html>
